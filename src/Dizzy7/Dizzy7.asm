@@ -65,16 +65,7 @@ StartFixed:
 	ld		de, game_end	
 	call	deexo	
 
-	;set poke
-KeyTest:
- 	ld		bc, $FEFE
- 	in		a, (c)
- 	and		1
-	jr		nz, NoPoke
-	
-	ld		hl, game_poke_a	
-	ld		(hl), game_poke_v
-NoPoke:
+	include "../poker.asm"
 
 	;signal 48K machine
 	xor		a
@@ -93,9 +84,9 @@ NoPoke:
 End:	
 
 block1:
-	incbin "dizzy7.bin.exo"
+	incbin "dizzy7.1.exo"
 block2:
-	incbin "dizzy7.exo"
+	incbin "dizzy7.2.exo"
 block3:
-	incbin "dizzy8.exo"
+	incbin "dizzy7.3.exo"
 blockend:

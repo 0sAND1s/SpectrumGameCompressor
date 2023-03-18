@@ -38,15 +38,7 @@ StartMobile:
 	ld		de, game_end	
 	call	deexo	
 	
-KeyTest:	
- 	ld		bc, $FEFE
- 	in		a, (c)
- 	and		1 	
-	jr		nz, NoPoke
-		
-	ld		hl, game_poke_a
-	ld		(hl), game_poke_v		
-NoPoke:		
+	include "../poker.asm"
 	
 	xor		a	
 	ld		($5c4b), a					;signal 48K model, the game checks this

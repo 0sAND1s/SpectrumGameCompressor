@@ -1,5 +1,4 @@
 rem @echo off
-set blkScr="T.DIZZY3"
-set blkMain="T.DIZZY4"
-..\..\tools\hcdisk2 open %input% : get %blkScr% : get %blkMain% : exit
-
+..\..\tools\hcdisk2 open %input% : get "T.DIZZY3" : get "T.DIZZY4" : exit
+ren "T.DIZZY3" %name%.scr
+ren "T.DIZZY4" %name%.main
