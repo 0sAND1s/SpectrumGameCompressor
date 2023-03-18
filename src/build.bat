@@ -1,4 +1,4 @@
-rem @echo off
+@echo off
 
 REM for each game folder, will call the game specific script to extract the game files, combine files, skip files, etc.
 set gamelist="*"
@@ -12,7 +12,7 @@ pushd %1
 set name=%1
 set input=..\..\input\%name%.tap
 set output=..\..\output\%name%.tap
-
+set dontcompress=0
 REM skip build if output exists
 REM if exist %output% goto skipgamebuild
 REM skip build if game.bat not present yet.
@@ -32,8 +32,8 @@ REM pack the main block
 if not "%dontcompress%"=="1" (
 call ..\..\tools\pack.bat %blkMain% %name%main.exo
 call :getfilesize %name%main.exo
-set mainsize=%size%
 )
+set mainsize=%size%
 
 REM assemble loader and pass detected blob sizes
 ..\..\tools\sjasmplus.exe %name%.asm --raw=%name%ldr.bin -DSCR_SIZE=%scrsize% -DMAIN_SIZE=%mainsize%

@@ -1,13 +1,16 @@
 # SpectrumGameCompressor
 Tool for semi-automatic game compressing for the ZX Spectrum computer
 
-Provides a generic, automated mechanism to create compressed ZX Spectrum games, optimised for file size. All
+Provides a generic, automated mechanism to create compressed ZX Spectrum games, optimised for file size.
 Steps are:
 - extract specific blocks from a ZX Spectrum TAP/TZX file
 - compress the blocks using Exomizer
 - assemble a Z80 assembler loader that unpacks the game blobs at runtime
 - package the binary in a TAP file, in a BASIC program block
 - clean up after build.
+
+There are minimal changes when adding a new game to be compressed, as the common code is kept is separate assembly files, only specific game parameters need to change like game start/end address, stack address, execution address.
+If a common file needs to be updated, the build script will build everything again.
 
 The generic build script will build all games from src folder, or just the one specified in command line.
 Each game file in the input folder must have the same file name as the corespoding sub-folder in src folder. Each output game file will have a the same matching name.
