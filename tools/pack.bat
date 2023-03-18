@@ -1,0 +1,1 @@
+..\..\tools\exomizer raw -b -c %1 -o %2
