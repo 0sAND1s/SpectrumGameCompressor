@@ -13,7 +13,7 @@ game_entry		EQU	game_start
 game_poke_a		EQU	62745
 game_poke_v		EQU	0
 	
-	org		$5B00 - (EndMobile - StartMobile)
+	org		$5B00 - (StartFixed - StartMobile)
 
 StartMobile:
 	;display message	
@@ -24,7 +24,7 @@ StartMobile:
 	ld		sp, game_stack 
 	
 	ld		de, StartFixed	
-	ld		hl, EndMobile - StartMobile
+	ld		hl, StartFixed - StartMobile
 	add		hl, bc						
 	ld		bc, End - StartFixed			
 	ldir					
@@ -34,19 +34,17 @@ StartMobile:
 	add		hl, bc
 	ld		de, temp_buf_end			
 	call	deexo			
-	
+		
 	push	 hl
 		;draw screen from temp buffer
 		inc		de
-		ex		de, hl		
-		call	ScrDraw		
+		ex		de, hl				
+		call	ScrDraw
 	pop		hl
-	
-	jp	StartFixed
-EndMobile:		
-	
 
+	jp	StartFixed
 StartFixed:	
+
 	ld		bc, -(MAIN_SIZE - 1)
 	add		hl, bc
 	;move game code up in RAM, from begining	
@@ -54,7 +52,7 @@ StartFixed:
 	;allow safety offset of 4
 	ld		de, game_start - 4	
 	ldir
-	
+				
 	;go back one byte after LDIR
 	dec		de
 	;unpack game into place
@@ -65,7 +63,7 @@ StartFixed:
 	include "../poker.asm"
 
 	jp		game_entry	
-	
-	include "../scr_draw.asm"	
+		
+	include "../scr_draw.asm"			
 	include	"../deexo_simple_b.asm"
 End:

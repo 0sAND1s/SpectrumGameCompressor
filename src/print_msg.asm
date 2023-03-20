@@ -13,8 +13,10 @@ PrintMsgLoop:
 		rst		$10
 		inc		hl
 		halt
+		halt
+		halt
 		djnz	PrintMsgLoop			
 	pop		bc		
 	jr		Msg + MsgLen
-Msg	defb	"Hold CAPS SHIFT for cheat mode;)", 127, "2023 george.chirtoaca@gmail.com"	
+Msg	defb	" ENTER=start, L=unlimited lives", 13, 127, "2023 george.chirtoaca@gmail.com"	
 MsgLen equ	$ - Msg

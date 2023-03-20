@@ -10,7 +10,7 @@ game_poke_a		equ 29289
 game_poke_v		equ 201
 
 
-	org		$5B00 - (EndMobile - StartMobile)
+	org		$5B00 - (StartFixed - StartMobile)
 	
 StartMobile:
 	;display message	
@@ -21,7 +21,7 @@ StartMobile:
 	ld		sp, temp_stack
 	
 	ld		de, StartFixed	
-	ld		hl, EndMobile - StartMobile
+	ld		hl, StartFixed - StartMobile
 	add		hl, bc						
 	ld		bc, End - StartFixed			
 	ldir									
@@ -33,7 +33,8 @@ StartMobile:
 	push	hl	
 		ex		de, hl
 		inc		hl
-		call	ScrDraw		
+		
+		call	ScrDraw
 	pop		hl	
 	
 	ld		de, game_end	
@@ -46,10 +47,9 @@ StartMobile:
 	ld		(23728), a	
 	
 	ld		sp, game_stack
-	jp		game_entry
-EndMobile:		
+	jp		game_entry		
 		
-StartFixed:		
+StartFixed:			
 	include "../scr_draw.asm"
 	include	"../deexo_simple_b_fast.asm"
 End:
