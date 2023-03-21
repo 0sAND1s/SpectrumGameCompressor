@@ -1,1 +1,2 @@
-..\..\tools\exomizer raw -b -c %1 -o %2
+if "%develop%"=="1" set quick=-q
+..\tools\zx0 -b -f %quick% %1 %2
