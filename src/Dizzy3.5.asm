@@ -73,7 +73,7 @@ Unpack:
 End:	
 
 blockMain:
-	incbin "dizzy35.2.packed"
+	incbin "dizzy3.5.2.packed"
 blockScr:
-	incbin "dizzy35.1.packed"
+	incbin "dizzy3.5.1.packed"
 blockEnd:
