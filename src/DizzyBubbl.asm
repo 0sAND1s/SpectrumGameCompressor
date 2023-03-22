@@ -16,7 +16,7 @@ StartMobile:
 	include "print_msg.asm"			
 	
 	;move loader into place	
-	;di
+	di
 	ld		sp, temp_stack
 	
 	ld		de, StartFixed	
@@ -39,7 +39,7 @@ StartMobile:
 	ENDIF
 	
 	jp		StartFixed
-StartFixed:				
+StartFixed:					
 
 	ld		bc, -MAIN_SIZE+1
 	add		hl, bc
@@ -60,7 +60,7 @@ StartFixed:
 	
 	
 	include "poker.asm"
-	
+		
 	ld		sp, game_stack
 	jp		game_entry
 
