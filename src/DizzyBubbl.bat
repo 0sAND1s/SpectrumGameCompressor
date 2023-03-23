@@ -1,3 +1,2 @@
-..\tools\hcdisk2 open %input% : get "Bubbles2" : get "Bubbles4" : exit
-if not %skipScr%==1 (ren "Bubbles2" %name%.scr) else (del "Bubbles2")
-ren "Bubbles4" %name%.main
+..\tools\hcdisk2 open %input% : get "Bubbles2" -n %name%.scr : get "Bubbles4" -n %name%.main : exit
+if %skipScr%==1 del %name%.scr

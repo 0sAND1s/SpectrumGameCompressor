@@ -1,3 +1,2 @@
-..\tools\hcdisk2 open %input% : get "Dizzy4" : get "Dizzy5" : exit
-if not %skipScr%==1 (ren "Dizzy4" %name%.scr) else (del "Dizzy4")
-ren "Dizzy5" %name%.main
+..\tools\hcdisk2 open %input% : get Dizzy4 -n %name%.scr : get Dizzy5 -n %name%.main : exit
+if %skipScr%==1 del %name%.scr

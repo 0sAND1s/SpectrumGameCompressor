@@ -4,8 +4,8 @@
 @REM If set to 1, files won't be cleaned up, listing file will be produced.
 @set develop=0
 
-if "%develop%"=="1" (
-set lst=--lst
+@if "%develop%"=="1" (
+@set lst=--lst
 ) else (
 @echo off
 set lst=
@@ -32,17 +32,17 @@ set doCompress=1
 
 @REM Always cleanup temp files before build.
 call :cleanup
+del %output%
 
 @REM skip build if output exists
 REM if exist %output% goto skipgamebuild
 @REM skip build if game.bat not present yet.
 if exist %name%.asm (call %name%.bat) else (goto skipgamebuild)
 
-@REM skip SCREEN$ processing if we decided to not include the SCREEN$ in the output
+@REM skip SCREEN$ processing if we decided to not include the SCREEN$ in the output, either because we set skipScr or because it doesn't fit in memory (like for Dizzy7)
 if exist %name%.scr (
 @REM order screen by columns for better compression
 ..\tools\hcdisk2 screen order column %name%.scr %name%c.scr : exit
-
 @REM pack screen
 call ..\tools\pack.bat %name%c.scr %name%.scr.packed
 call :getfilesize %name%.scr.packed

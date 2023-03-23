@@ -1,3 +1,2 @@
-..\tools\hcdisk2 open %input% : get "KWIKSNAX2" : get "KWIKSNAX3" : exit
-if not %skipScr%==1 (ren "KWIKSNAX2" %name%.scr) else (del "KWIKSNAX2")
-ren "KWIKSNAX3" %name%.main
+..\tools\hcdisk2 open %input% : get "KWIKSNAX2" -n %name%.scr : get "KWIKSNAX3" -n %name%.main : exit
+if %skipScr%==1 del %name%.scr

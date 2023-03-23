@@ -1,6 +1,7 @@
 
 	DEVICE ZXSPECTRUM48
 
+game_start		equ	24137
 game_end		equ	65531
 game_entry		equ 24158
 game_poke_a		equ 29623
@@ -11,7 +12,7 @@ game_stack		equ $5C00
 
 StartMobile:
 	;display message	
-	;include "../print_msg.asm"			
+	include "print_msg.asm"			
 	
 	;move loader into place	
 	di
@@ -32,7 +33,18 @@ StartMobile:
 		inc		hl
 		call	ScrDraw		
 	pop		hl	
+
+	jp StartFixed
+StartFixed:
 	
+	ld		bc, -MAIN_SIZE + 1
+	add		hl, bc
+	ld		de, game_start - 3
+	ld		bc, MAIN_SIZE
+	ldir
+	
+	dec		de
+	ex		de, hl
 	ld		de, game_end	
 	call	Unpack		
 
@@ -50,7 +62,6 @@ StartMobile:
 	xor		a
 	jp		game_entry
 
-StartFixed:
 	include "scr_draw.asm"
 Unpack:	
 	include	"dzx0_turbo_back.asm"
