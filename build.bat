@@ -26,7 +26,7 @@ goto end
 :buildgame
 pushd src
 set name=%1
-set input=..\input\%name%.tap
+if exist ..\input\%name%.tap (set input=..\input\%name%.tap) else (set input=..\input\%name%.tzx)
 set output=..\output\%name%.tap
 set doCompress=1
 

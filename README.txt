@@ -51,7 +51,8 @@ I noticed that a few games are not running properly on Spectrum +3 when loaded f
 It might be that the originals had the issue too, or that are not cracked properly, or that are using memory in the printer buffer area. Any help is appreciated to fix them.
 
 The tools used by the build script are all open source. The binaries are included in the "tools" folder. Can also be found here:
-- ZX0 excelet compressor by Einar Saukas: https://github.com/einar-saukas/ZX0 . I found it to be faster, smaller and to have better compression than the otherwise very good Exomizer packer.
+- ZX0 excelent compressor by Einar Saukas: https://github.com/einar-saukas/ZX0 . I found it to be faster, smaller and to have better compression than the otherwise very good Exomizer packer.
 - SjAsmPlus assembler by z00m128: https://github.com/z00m128/sjasmplus
-- HCDisk 2.0 by George Chirtoaca, used for extracting blocks from TAP/TZX files, reordering/blanking SCREEN$ files to improve compressing, bin2rem functionality, file cutting, producing the resulting TAP files
+- HCDisk 2.0 by George Chirtoaca, used for extracting blocks from TAP/TZX files, reordering/blanking SCREEN$ files to improve compressing, bin2rem functionality, file cutting, producing the resulting TAP files: https://github.com/0sAND1s/HCDisk
+- Spectaculator emulator by Jonathan Needle for debugging: https://www.spectaculator.com/
 - https://www.the-tipshop.co.uk/ for unlimited life POKEs.
