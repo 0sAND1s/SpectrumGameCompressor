@@ -39,21 +39,6 @@ StartMobile:
 
 	jp		StartFixed
 StartFixed:			
-
-	/*
-	ld		bc, -(MAIN_SIZE - 1)
-	add		hl, bc
-	;move game code up in RAM, from begining	
-	ld		bc, MAIN_SIZE
-	;allow safety offset of 4
-	ld		de, game_start - 4	
-	ldir
-				
-	;go back one byte after LDIR
-	dec		de	
-	;unpack game into place
-	ex		de, hl	
-	*/
 	
 	ld		de, game_end	
 	call	Unpack	
