@@ -44,9 +44,10 @@ The build script supports tweaking using these parameters:
 - cropScr, set to 1 for games like Dizzy, where the loaded SCREEN$ is shown during the game (game display area is not full screen). This way, only the needed SCREEN$ area is kept, the rest is zeroed, to save space.
 - doCompress, used internally for games that perform the compression in the name.bat file, like Dizzy 7, because the game has more than one block.
 
-Also provided are to .bat scripts that create DSK files with the games from the output folder, using HCDisk. These can be called with no argument or with specific file mask to include on the disk, eg "dsk4plus3.dsk Dizzy1.bat".
-- dsk4plus3.bat - creates DSK image dizzyplus3.dsk for Spectrum +3.
-- dsk4hc.bat - creates DSK image dizzyhc.dsk for ICE Felix HC (my favorite ZX Spectrum clone).
+Also provided are to .bat scripts that create DSK files with the games from the output folder, using HCDisk. 
+These can be called with no argument or with specific file mask to include on the disk, eg "dsk4plus3.dsk Dizzy1.bat".
+- dsk4plus3.bat - creates DSK image gamesplus3.dsk for Spectrum +3.
+- dsk4hc.bat - creates DSK image gameshc.dsk for ICE Felix HC (my favorite ZX Spectrum clone).
 I noticed that a few games are not running properly on Spectrum +3 when loaded from disk, but work fine on Spectrum 128K/48K or even +3 when loaded from tape. 
 It might be that the originals had the issue too, or that are not cracked properly, or that are using memory in the printer buffer area. Any help is appreciated to fix them.
 
@@ -56,3 +57,4 @@ The tools used by the build script are all open source. The binaries are include
 - HCDisk 2.0 by George Chirtoaca, used for extracting blocks from TAP/TZX files, reordering/blanking SCREEN$ files to improve compressing, bin2rem functionality, file cutting, producing the resulting TAP files: https://github.com/0sAND1s/HCDisk
 - Spectaculator emulator by Jonathan Needle for debugging: https://www.spectaculator.com/
 - https://www.the-tipshop.co.uk/ for unlimited life POKEs.
+- https://worldofspectrum.org/ , https://www.zx-spectrum.cz/index.php?lang=en for games download

@@ -1,0 +1,1 @@
+..\tools\hcdisk2 open %input% : get "amazadvro3" -n %name%.main : exit

@@ -26,7 +26,8 @@ goto end
 :buildgame
 pushd src
 set name=%1
-if exist ..\input\%name%.tap (set input=..\input\%name%.tap) else (set input=..\input\%name%.tzx)
+if exist ..\input\%name%.tap (set input=..\input\%name%.tap) else (if exist ..\input\%name%.tzx set input=..\input\%name%.tzx)
+if "%input%"=="" goto skipgamebuild
 set output=..\output\%name%.tap
 set doCompress=1
 
@@ -73,7 +74,7 @@ if exist %name%.scr.packed (
 
 
 @REM output TAP file with blob in REM line
-..\tools\hcdisk2 format %output% -y : open %output% : bin2rem %name%.out %name% : dir : exit
+..\tools\hcdisk2 format %output% -y : open %output% : bin2bas var %name%.out %name% : dir : exit
 
 @REM cleanup temp files after build
 if %develop%==0 call :cleanup
