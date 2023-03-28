@@ -1,9 +1,11 @@
 	DEVICE ZXSPECTRUM48
 
+game_start		equ 24576
 game_end		equ	$FFFE
 game_entry		equ $B76F
 game_stack		equ $5C00
-game_poke_a		equ 42230
+;POKE was runtime, had to adapt it to type-in.
+game_poke_a		equ game_start + $49F6
 game_poke_v		equ	182
 
 

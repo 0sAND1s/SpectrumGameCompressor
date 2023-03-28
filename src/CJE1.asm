@@ -4,7 +4,8 @@ game_start		equ 28416
 game_end		equ	$FFFE
 game_entry		equ 62728
 game_stack		equ $5C00
-game_poke_a		equ 52425
+;POKE was for runtime, had to make it type-in
+game_poke_a		equ game_start + $71C9
 game_poke_v		equ	182
 
 

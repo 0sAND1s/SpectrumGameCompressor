@@ -2,15 +2,14 @@
 
 	DEVICE ZXSPECTRUM48
 	
-game_stack		EQU	24575
+game_stack		EQU	26000
 temp_stack		EQU $5C00
-game_start		EQU	24576
-game_len		EQU	40960
+game_start		EQU	26359
+game_len		EQU	39177
 game_end		EQU	$FFFF
-game_entry		EQU	$8000
-
-game_poke_a		EQU	30981
-game_poke_v		EQU	0
+game_entry		EQU	26359
+game_poke_a		EQU	46691
+game_poke_v		EQU	182
 	
 	org		$5B00 - (StartFixed - StartMobile)
 
@@ -48,7 +47,6 @@ StartMobile:
 	
 	xor		a
 	out		($fe), a	
-	ld		($5B5C), a
 
 	include "poker.asm"	
 	

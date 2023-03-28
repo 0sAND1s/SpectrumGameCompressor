@@ -40,7 +40,7 @@ REM if exist %output% goto skipgamebuild
 @REM skip build if game.bat not present yet.
 if exist %name%.asm (call %name%.bat) else (goto skipgamebuild)
 
-@REM skip SCREEN$ processing if we decided to not include the SCREEN$ in the output, either because we set skipScr or because it doesn't fit in memory (like for Dizzy7)
+@REM skip SCREEN$ processing if we decided to not include the SCREEN$ in the output, either because we set skipScr or because it doesn't fit in memory (like for Dizzy7), or is compressed in the original version, or it doesn't exist.
 if exist %name%.scr (
 @REM order screen by columns for better compression
 ..\tools\hcdisk2 screen order column %name%.scr %name%c.scr : exit
