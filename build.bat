@@ -1,7 +1,7 @@
 @REM for each game folder, will call the game specific script to extract the game files, combine files, skip files, etc.
 @REM naming convention: SCREEN$ = %name%.scr, main block = %name%.main, loader = %name%.ldr
 
-@REM If set to 1, files won't be cleaned up, listing file will be produced.
+@REM If set to 1, files won't be cleaned up, listing file will be produced, compression will be faster.
 @set develop=0
 
 @if "%develop%"=="1" (
@@ -12,10 +12,9 @@ set lst=
 cls
 )
 
-@REM some games, like Dizzy, show the SCREEN$ border during the game. Part of the loading SCREEN$ that's not shown in the game can be cropped, for better compression, reducing 1-3 KB. Set cropScr=1.
-set cropScr=0
-@REM we can decide to skipp the SCREEN$ completelly for some games.
-set skipScr=0
+@REM some games, like Dizzy, show the SCREEN$ border during the game. Part of the loading SCREEN$ that's not shown in the game can be cropped, for better compression, reducing 1-3 KB.
+@REM we can decide to skip the SCREEN$ completely for some games.
+set wantScr=1
 
 set gamelist="src\*.bat"
 if not "%1"=="" set gamelist=src\%1.bat
@@ -40,7 +39,7 @@ REM if exist %output% goto skipgamebuild
 @REM skip build if game.bat not present yet.
 if exist %name%.asm (call %name%.bat) else (goto skipgamebuild)
 
-@REM skip SCREEN$ processing if we decided to not include the SCREEN$ in the output, either because we set skipScr or because it doesn't fit in memory (like for Dizzy7), or is compressed in the original version, or it doesn't exist.
+@REM skip SCREEN$ processing if we decided to not include the SCREEN$ in the output, either because we set wantScr=0 or because it doesn't fit in memory (like for Dizzy7), or is compressed in the original version, or it doesn't exist.
 if exist %name%.scr (
 @REM order screen by columns for better compression
 ..\tools\hcdisk2 screen order column %name%.scr %name%c.scr : exit
@@ -63,7 +62,7 @@ call :getfilesize %name%.main.packed
 set mainsize=%size%
 
 @REM assemble loader and pass detected blob sizes. Adding --lst produces the listing file which can help in troubleshooting the ASM loader.
-..\tools\sjasmplus.exe %name%.asm --raw=%name%.ldr -DSCR_SIZE=%scrsize% -DMAIN_SIZE=%mainsize% %havescr% %lst%
+..\tools\sjasmplus.exe %name%.asm --raw=%name%.ldr -DSCR_SIZE=%scrsize% -DMAIN_SIZE=%mainsize% %havescr% %lst% -DNAME=%name%
 
 @REM create final blob = loader + main game blob + optional screen.
 if exist %name%.scr.packed (

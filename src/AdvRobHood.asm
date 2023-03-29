@@ -16,7 +16,7 @@ StartMobile:
 	include "print_msg.asm"			
 	
 	;move loader into place		
-	;di
+	di
 	ld		sp, game_stack
 	
 	ld		de, StartFixed	
@@ -35,8 +35,8 @@ StartFixed:
 	add		hl, bc
 	;move game code up in RAM, from begining	
 	ld		bc, MAIN_SIZE
-	;allow safety offset of 4
-	ld		de, game_start - 4	
+	;allow safety offset of 3
+	ld		de, game_start - 3
 	ldir				
 	;go back one byte after LDIR
 	dec		de
