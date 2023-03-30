@@ -1,0 +1,1 @@
+..\tools\hcdisk2 open %input% : get CASTLE6 -n %name%.scr : get CASTLE5 -n %name%.main : exit
