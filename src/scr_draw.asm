@@ -1,4 +1,5 @@
 ;HL = SCREEN$ address
+	IFDEF HAVE_SCR
 ScrDraw:		
 		ld		de, 16384
 		ld		bc, 6144	
@@ -45,3 +46,4 @@ ScrNextEnd:
 		ld		bc, 768
 		ldir		
 		ret
+	ENDIF

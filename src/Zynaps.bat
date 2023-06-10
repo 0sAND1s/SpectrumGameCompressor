@@ -1,0 +1,1 @@
+..\tools\hcdisk2 open %input% : get code -n %name%.main : exit

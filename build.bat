@@ -57,8 +57,8 @@ set scrsize=%size%
 @REM pack the main block
 if "%doCompress%"=="1" (
 call ..\tools\pack.bat %name%.main %name%.main.packed
-call :getfilesize %name%.main.packed
 )
+call :getfilesize %name%.main.packed
 set mainsize=%size%
 
 @REM assemble loader and pass detected blob sizes. Adding --lst produces the listing file which can help in troubleshooting the ASM loader.
