@@ -1,6 +1,8 @@
 # SpectrumGameCompressor
 Tool for semi-automatic game compressing for the ZX Spectrum computer
 
+![ScreenShot](https://raw.githubusercontent.com/0sAND1s/SpectrumGameCompressor/main/SpectrumGameCompressor1.png)
+
 Provides a generic, automated mechanism to create compressed ZX Spectrum games, optimised for minimal file size and portability for loading.
 It provides many top, hand picked games converted already, more to come. But also provides all the steps to convert those games starting from the original TAP/TZX image to produce the compressed one-block game in TAP format.
 Each resulting compressed game is the smallest version you will probably find, thanks to the very good compression using ZX0 and also because the entire game resides in a single program block.

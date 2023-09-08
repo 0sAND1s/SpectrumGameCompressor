@@ -32,7 +32,7 @@ set doCompress=1
 
 @REM Always cleanup temp files before build.
 call :cleanup
-del %output%
+if exist %output% del %output%
 
 @REM skip build if output exists
 REM if exist %output% goto skipgamebuild
@@ -78,8 +78,8 @@ if exist %name%.scr.packed (
 @REM cleanup temp files after build
 if %develop%==0 call :cleanup
 
-@REM start game to test it, if building a single game
-if not %gamelist%=="src\*.bat" start %output%
+@REM start game to test it, if building debug
+if "%develop%"=="1" start %output%
 
 :skipgamebuild
 popd
@@ -90,7 +90,7 @@ set size=%~z1
 exit /b
 
 :cleanup
-del %name%.main %name%*.scr %name%.ldr %name%.out *.packed *.lst
+for %%f in (%name%.main %name%*.scr %name%.ldr %name%.out *.packed *.lst) do if exist %%f del %%f
 exit /b
 
 :end
