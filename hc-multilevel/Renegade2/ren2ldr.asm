@@ -25,4 +25,4 @@ myfileidx:
 		db 	"0"
 .end
 
-		savebin	"ren2ldrhc",start,.end-start
+		savebin	"ren2ldr",start,.end-start

@@ -1,6 +1,5 @@
    10 CLEAR 34815: LOAD *"d";0;"ren2scr"SCREEN$ : LOAD *"d";0;"ren2main"CODE
-   15 REM For original tape loading version comment line 20.
-   20 LOAD *"d";0;"hcdskldr"CODE : RANDOMIZE USR 32768: LOAD *"d";0;"ren2ldrhc"CODE
+   20 LOAD *"d";0;"hcdskldr"CODE : RANDOMIZE USR 32768
    25 BORDER 0: PAPER 0: INK 2: CLS : PRINT #0; INK 2;"Disk version for HC - 11.09.2022 -=GEORGE.CHIRTOACA@GMAIL.COM=-"
    30 LET m$="Turbo speed": GO SUB 200: IF k$="y" THEN  POKE 62769,0
    40 LET m$="Unlimited lives": GO SUB 200: IF k$="y" THEN  POKE 59911,182

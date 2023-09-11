@@ -13,8 +13,11 @@ set name=rbc
 ..\..\tools\sjasmplus rbclvlldr1.asm
 ..\..\tools\sjasmplus rbclvlldr2.asm
 
+@REM Patch game code with 2 disk loaders
+..\..\tools\hcdisk2 binpatch %name%main rbclvlldr1 333 : binpatch %name%main rbclvlldr2 13845 : exit
+
 @REM Put files to disk image
-..\..\tools\hcdisk2 format %output% -t 2 -y : open %output% : basimp %name%ldr.bas Robocop1HC : put %name%scr -t b -s 16384 : put hcdskldr -t b -s 32768 : put %name%main -t b -s 32767 : put rbclvlldr1 -t b -s 33100 : put rbclvlldr2 -t b -s 46612 : put %name%lvl1 -t b -s 43608 : put %name%lvl2 -t b -s 43608 : put %name%lvl3 -t b -s 43608 : put %name%lvl4 -t b -s 43608 : put %name%lvl5 -t b -s 43608 : dir : exit
+..\..\tools\hcdisk2 format %output% -t 2 -y : open %output% : basimp %name%ldr.bas Robocop1HC : put %name%scr -t b -s 16384 : put hcdskldr -t b -s 32768 : put %name%main -t b -s 32767 : put %name%lvl1 -t b -s 43608 : put %name%lvl2 -t b -s 43608 : put %name%lvl3 -t b -s 43608 : put %name%lvl4 -t b -s 43608 : put %name%lvl5 -t b -s 43608 : dir : exit
 
 @REM Cleanup
 del %name%scr %name%main %name%lvl1 %name%lvl2 %name%lvl3 %name%lvl4 %name%lvl5 %name%ldrhc hcdskldr lvlldr.bin rbclvlldr1 rbclvlldr2

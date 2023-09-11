@@ -10,10 +10,13 @@ set name=ren2
 @REM Assemble loaders
 ..\..\tools\sjasmplus ..\levelloader.asm
 ..\..\tools\sjasmplus ..\hcdskldr.asm
-..\..\tools\sjasmplus ren2ldrhc.asm
+..\..\tools\sjasmplus %name%ldr.asm
+
+@REM Patch game code with HC disk loader
+..\..\tools\hcdisk2 binpatch %name%main %name%ldr 17082 : exit
 
 @REM Put files to disk image
-..\..\tools\hcdisk2 format %output% -t 2 -y : open %output% : basimp %name%.bas Ren2HC : put %name%scr -t b -s 16384 : put %name%main -t b -s 34816 : put hcdskldr -t b -s 32768 : put %name%ldrhc -t b -s 51898 : put %name%lvl1 -t b -s 25600 : put %name%lvl2 -t b -s 25600 : put %name%lvl3 -t b -s 25600 : put %name%lvl4 -t b -s 25600 : put %name%lvl5 -t b -s 25600 : dir : exit
+..\..\tools\hcdisk2 format %output% -t 2 -y : open %output% : basimp %name%ldr.bas Ren2HC : put %name%scr -t b -s 16384 : put %name%main -t b -s 34816 : put hcdskldr -t b -s 32768 : put %name%lvl1 -t b -s 25600 : put %name%lvl2 -t b -s 25600 : put %name%lvl3 -t b -s 25600 : put %name%lvl4 -t b -s 25600 : put %name%lvl5 -t b -s 25600 : dir : exit
 
 @REM Cleanup
-del %name%scr %name%main %name%lvl1 %name%lvl2 %name%lvl3 %name%lvl4 %name%lvl5 %name%ldrhc hcdskldr lvlldr.bin
+del %name%scr %name%main %name%lvl1 %name%lvl2 %name%lvl3 %name%lvl4 %name%lvl5 %name%ldr hcdskldr lvlldr.bin

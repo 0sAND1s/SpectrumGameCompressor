@@ -3,7 +3,15 @@
 pageout:	equ	$700
 
 		org	32768
-start:		di
+start:		
+		;GC: Determine current drive and patch it in the level loader, to allow loading levels from drive B: too.
+		ld a, 12
+		ld ($5CEF), a
+		rst 08
+		defb 57
+		ld	(loadend-17), a
+
+		di
 		call	pagein
 		ld	hl,loadercode
 		ld	de,10830
