@@ -1,6 +1,18 @@
-	device	zxspectrum48
+;HC file loader by Rares Atodiresei
 
-pageout:	equ	$700
+;Memory map for the 1K IF RAM:
+;total RAM - 10240 - 11264 = 1K
+;uninit. vars: 290 bytes, at 10240 - 10530
+;free RAM: 10531 - 10609 - only format command uses it for a table of 64 bytes.
+;RAM used by IF1 routines: 10610 - 10817
+;loader code: 10830 - 11247
+
+
+	device	zxspectrum48
+	
+pageout		equ	$700
+loaderaddr	equ	10830
+
 shadowram:	equ	$2800
 sectorbuff:	equ	shadowram  + 000	;len=256
 aubuf:		equ	sectorbuff + 256	;len= 16
@@ -12,9 +24,53 @@ sectpos:	equ	aupos      + 001	;len=  1 ; pozitia sectorului in AU (0..7)
 spsave:		equ	sectpos    + 001	;len=  2 ;
 intsave:	equ	spsave	   + 002	;len=  1 ;
 rwts:		equ	4773
+VAR_COPIES	EQU	$5CEF		;BDOS function
+VAR_HD11	EQU	$5CED
+GET_CUR_DRV EQU 12
+BDOS_CALL	EQU 57
+		
+		org		loaderaddr - (deployerend - deployer)
+deployer:
+		;GC: Determine current drive and patch it in the level loader, to allow loading levels from drive B: too.		
+		push	bc
+		ld		a, GET_CUR_DRV
+		ld		(VAR_COPIES), a
+		rst 	08
+		defb	BDOS_CALL		
+		ex		af, af'
+				
+		pop		bc
+		push	bc
+		ld		hl, deployermove - deployer - 1
+		add		hl, bc
+		;page-in				
+		push	hl
+		ld		hl, 0
+		push	hl
+		jp		8
 
-		org	10830
-start:
+deployermove:		
+		pop		bc
+		ld		hl, deployerend - deployer
+		add		hl, bc
+		
+		ld		de, loaderaddr
+		ld		bc, loaderend - loaderstart - 1
+		ldir
+				
+		ex		af, af'
+		ld		(drivenr), a
+		
+		ld		hl, 10753
+		ld		(10751),hl	;adresa rutinei de tratare INT
+		ld		a,201		;ret
+		ld		(hl),a
+				
+		jp		pageout
+deployerend:	
+
+		org	loaderaddr
+loaderstart:
 ;************************************************************************************
 ;* incarca de pe discheta fisierul cu numele specificat in (HL)
 ;* in memorie la adresa si lungimea din headerul fisierului
@@ -108,7 +164,7 @@ spatiu:		ld	(de),a
 		ret
 
 ;************************************************************************************
-;* rutina conversie AU in track si cector
+;* rutina conversie AU in track si sector
 ;* INPUT  <- HL = AU  (0..319)
 ;* OUTPUT -> L=Track (0..79) H=Sector (0..31)
 ;************************************************************************************
@@ -290,7 +346,4 @@ rwtsresult:	db	255
 vlnrread:	db	255
 rwtswksp:	ds	4,255
 
-
-.end
-
-		savebin	"lvlldr.bin",start,.end-start 
+loaderend:

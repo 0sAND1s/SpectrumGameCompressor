@@ -1,5 +1,5 @@
    10 CLEAR 24575: BORDER 0: PAPER 0: INK 2: CLS
    15 LOAD *"d";0;"nbreedscr"SCREEN$
-   17 LOAD *"d";0;"hcdskldr"CODE : RANDOMIZE USR 32768
+   17 LOAD *"d";0;"levelldr"CODE : RANDOMIZE USR 32768
    20 LOAD *"d";0;"nbreedlvl0"CODE
    30 RANDOMIZE USR 40000

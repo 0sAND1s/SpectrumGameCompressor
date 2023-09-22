@@ -1,4 +1,4 @@
-   10 LOAD *"d";0;"rbcscr"SCREEN$: LOAD *"d";0;"hcdskldr"CODE : RANDOMIZE USR 32768: LOAD *"d";0;"rbcmain"CODE
+   10 LOAD *"d";0;"rbcscr"SCREEN$: LOAD *"d";0;"levelldr"CODE : RANDOMIZE USR 32768: LOAD *"d";0;"rbcmain"CODE
    20 BORDER 0: PAPER 0: INK 2: CLS : PRINT #0; INK 2;"Disk version for HC - 14.09.2022 -=george.chirtoaca@gmail.com=-"
    30 LET m$="Unlimited energy": GO SUB 200: IF k$="y" THEN  POKE 39540,201
    40 LET m$="Unlimited time": GO SUB 200: IF k$="y" THEN  POKE 45722,201
