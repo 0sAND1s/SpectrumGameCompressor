@@ -16,14 +16,14 @@ cls
 @REM we can decide to skip the SCREEN$ completely for some games.
 set wantScr=1
 
-set gamelist="src\*.bat"
-if not "%1"=="" set gamelist=src\%1.bat
+set gamelist="srctap\*.bat"
+if not "%1"=="" set gamelist=srctap\%1.bat
 for %%d in (%gamelist%) do call :buildgame %%~nd
 goto end
 
 
 :buildgame
-pushd src
+pushd srctap
 set name=%1
 if exist ..\input\%name%.tap (set input=..\input\%name%.tap) else (if exist ..\input\%name%.tzx set input=..\input\%name%.tzx)
 if "%input%"=="" goto skipgamebuild
