@@ -54,8 +54,10 @@ I noticed that a few games are not running properly on Spectrum +3 when loaded f
 It might be that the originals had the issue too, or that are not cracked properly, or that are using memory in the printer buffer area. Any help is appreciated to fix them.
 
 Also added the feature for producing turbo-loading TZX files, in folder 'buildtzx'. The games can be built at once with buildtzx.bat or individually with command 'buildtzx.bat Dizzy3' for example.
-The loading speed is 6000 baud, resulting in loading time of at most 1 minute! Some other supported speeds, configured in buildtzx.bat are 1364 (ROM speed), 2250, and 3000. 
-This allows fast loading of the compressed games on a ZX Spectrum or clone that only has the tape input as loading option.
+The default loading speed is 6000 baud, resulting in loading time of at most 1 minute! Some other supported speeds, configured in buildtzx.bat are 1364 (ROM speed), 2250 (good for tape recording), and 3000. 
+The loading border stripes color is showing the progress of loading, in chunks of 8KB left to load: white - 8KB, yellow - 16KB, cyan - 24KB, green - 32KB, magenta - 40KB, red - 48KB.
+Using baud 6000, 8KB block is loaded in about 14 seconds, so the color changes every 14 seconds. 
+This feature allows fast loading of the compressed games on a ZX Spectrum or clone that only has the tape input as loading option.
 
 The tools used by the build script are all open source. The binaries are included in the "tools" folder. Can also be found here:
 - ZX0 excelent compressor by Einar Saukas: https://github.com/einar-saukas/ZX0 . I found it to be faster, smaller and to have better compression than the otherwise very good Exomizer packer.

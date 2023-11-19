@@ -1,5 +1,6 @@
 setlocal enabledelayedexpansion
 
+REM Baud can be 6000, 3000, 2250, 1364 (ROM speed)
 set baud=6000
 set develop=0
 set wantscr=1

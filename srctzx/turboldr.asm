@@ -6,6 +6,13 @@
 ; - ZQLoader: https://github.com/oxidaan/zqloader
 ; - Otla: https://github.com/sweetlilmre/otla .
 
+;Added variable border color for showing loading progress:
+;-WHITE	: less than 8KB left to load
+;-YELLOW	: less than 16KB left to load
+;-CYAN		: less than 24KB left to load
+;-GREEN	: less than 32KB left to load
+;-MAGENTA	: less than 40KB left to load
+;-RED		: less than 48KB left to load.
 
 		DEVICE ZXSPECTRUM48		
 
@@ -25,7 +32,7 @@ COMPARE 	EQU $80 + 18
 DELAY 		EQU 7
 		ELSEIF BAUD==6000
 COMPARE 	EQU $80 + 7
-DELAY 		EQU 3
+DELAY 		EQU 1			;decreased from 3 to 1, to accomodate extra CPU time required by 
 		ENDIF
 
 BORDER_COLOUR 		EQU 2	;RED border
@@ -145,17 +152,28 @@ LD_DELAY:
 LD_SAMPLE:
 		INC  B               
 		RET  Z               
+				
 		IN   A,($FE)         
 		XOR  C               
 		AND  $40             
 		JR   Z,LD_SAMPLE     
-
-		LD   A,C             
-		XOR  $40 | BORDER_COLOUR          
-
-		LD   C,A             
-		AND  $07             
-		OR   $08             
-		OUT  ($FE),A         
+		
+		LD   A, C             		
+		XOR  $47			;alternate sample bit and border color    
+		LD   C, A
+		
+		LD	 A, D			;get 8K block to color mapping
+		AND  %11100000
+		RLCA
+		RLCA
+		RLCA				
+		OR  C
+		XOR %111			;alternate border color again
+		
+		AND  %111			;keep border colors, exclude sample status in bit 6.
+		OR   $08			;shut off mic             
+		OUT  ($FE),A        ;out for border color and mic off
+		
 		SCF                  
 		RET                   
+		
