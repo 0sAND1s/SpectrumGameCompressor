@@ -1,7 +1,11 @@
 ;Turbo loader extracted from Z802TZX utility by Tomaz Kac  (tomcat@sgn.net).
 
-;Is originally cofigured using 4 loading speeds (baud rate): 1364 (ROM-like), 2250, 3000, 6000.
+;Is originally cofigured using 4 loading speeds (baud rate): 1364 (ROM-like, but using shorter pilot tones), 2250, 3000, 6000.
 ;Speeds up to 3000 baud can be used with a tape recorder. Speed 6000 only works with PC output and allows loading a compressed game in about 1 minute.
+
+;Tested 6000 bauds with HC2000 (48K clone) with upgraded "operational amp" circuit and it works fine.
+;Tested 6000 bauds with HC-91+ (128K clone) and it doesn't work at 6000 baud, but 3000 is ok.
+
 ;Other tools exist that can produce even faster speeds, like 17000 baud, but I found those less reliable, even with the PC output: 
 ; - ZQLoader: https://github.com/oxidaan/zqloader
 ; - Otla: https://github.com/sweetlilmre/otla .
@@ -13,6 +17,7 @@
 ;-GREEN	: less than 32KB left to load
 ;-MAGENTA	: less than 40KB left to load
 ;-RED		: less than 48KB left to load.
+		DEFINE SHOW_LOAD_PROGRESS
 
 		DEVICE ZXSPECTRUM48		
 
@@ -20,6 +25,7 @@
 		IFNDEF BAUD
 		DEFINE BAUD 6000
 		ENDIF
+		
 		
 		IF BAUD==1364		;ROM timings
 COMPARE 	EQU $80 + 41
@@ -31,8 +37,14 @@ DELAY 		EQU 11
 COMPARE 	EQU $80 + 18
 DELAY 		EQU 7
 		ELSEIF BAUD==6000
+			;Uncomment the line bellow if showing the loading progress causes issues with 6000 baud loading.
+			;UNDEFINE SHOW_LOAD_PROGRESS
 COMPARE 	EQU $80 + 7
-DELAY 		EQU 1			;decreased from 3 to 1, to accomodate extra CPU time required by 
+			IFDEF SHOW_LOAD_PROGRESS
+DELAY 		EQU 1			;decreased from 3 to 1, to accomodate extra CPU time required by adding loading progress display with changing border colors.
+			ELSE
+DELAY 		EQU 3			
+			ENDIF
 		ENDIF
 
 BORDER_COLOUR 		EQU 2	;RED border
@@ -158,6 +170,8 @@ LD_SAMPLE:
 		AND  $40             
 		JR   Z,LD_SAMPLE     
 		
+		IFDEF SHOW_LOAD_PROGRESS
+		
 		LD   A, C             		
 		XOR  $47			;alternate sample bit and border color    
 		LD   C, A
@@ -169,6 +183,14 @@ LD_SAMPLE:
 		RLCA				
 		OR  C
 		XOR %111			;alternate border color again
+		
+		ELSE
+		
+		LD   A, C             		
+		XOR  $40 | BORDER_COLOUR
+		LD   C, A
+		
+		ENDIF
 		
 		AND  %111			;keep border colors, exclude sample status in bit 6.
 		OR   $08			;shut off mic             
