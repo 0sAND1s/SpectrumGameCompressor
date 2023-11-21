@@ -54,16 +54,30 @@ I noticed that a few games are not running properly on Spectrum +3 when loaded f
 It might be that the originals had the issue too, or that are not cracked properly, or that are using memory in the printer buffer area. Any help is appreciated to fix them.
 
 Also added the feature for producing turbo-loading TZX files, in folder 'buildtzx'. The games can be built at once with buildtzx.bat or individually with command 'buildtzx.bat Dizzy3' for example.
-The default loading speed is 6000 baud, resulting in loading time of at most 1 minute! Some other supported speeds, configured in buildtzx.bat are 1364 (ROM speed), 2250 (good for tape recording), and 3000. 
+The default loading speed is 6000 baud, resulting in loading time of at most 1 minute! Some other supported speeds, configured in buildtzx.bat are 1364 (ROM speed), 2250 (good for tape recording), and 3000 (good if 6000 is not working). 
 The loading border stripes color is showing the progress of loading, in chunks of 8KB left to load: white - 8KB, yellow - 16KB, cyan - 24KB, green - 32KB, magenta - 40KB, red - 48KB.
 Using baud 6000, 8KB block is loaded in about 14 seconds, so the color changes every 14 seconds. 
 This feature allows fast loading of the compressed games on a ZX Spectrum or clone that only has the tape input as loading option.
 
+
+Testing turbo loading on real hardware with PC or tape player as source
+BAUD/Hardware			6000 from PC		3000 from PC	3000 from tape	2250 from tape
+ZX Spectrum 48K			NOK					OK				NOK				OK
+HC-2000+HW fix			OK					OK				NOK				OK
+HC-91+					NOK					OK				NOK				OK
+Conclusion is that for tape usage, 2250 baud is the safe option. With PC as source of signal, 6000 baud might work, but 3000 baud is the safe option.
+My HC-2000 computer had hardware a improvement, the operational amp was replaced with a better version, so I suspect that's why it works better at 6000 baud.
+I also noticed that the ZX Spectrum requires higher signal volume compared to HC-2000.
+
+
 The tools used by the build script are all open source. The binaries are included in the "tools" folder. Can also be found here:
 - ZX0 excelent compressor by Einar Saukas: https://github.com/einar-saukas/ZX0 . I found it to be faster, smaller and to have better compression than the otherwise very good Exomizer packer.
 - SjAsmPlus assembler by z00m128: https://github.com/z00m128/sjasmplus
-- HCDisk 2.0 by George Chirtoaca, used for extracting blocks from TAP/TZX files, reordering/blanking SCREEN$ files to improve compressing, bin2rem functionality, file cutting, reading and producing the resulting TAP, TZX files: https://github.com/0sAND1s/HCDisk
+- HCDisk 2.0 by myself, used for extracting blocks from TAP/TZX files, reordering/blanking SCREEN$ files to improve compressing, bin2rem functionality, file cutting, reading and producing the resulting TAP, TZX files: https://github.com/0sAND1s/HCDisk
 - Spectaculator emulator by Jonathan Needle for debugging: https://www.spectaculator.com/
 - https://www.the-tipshop.co.uk/ for unlimited life POKEs.
 - https://worldofspectrum.org/ , https://www.zx-spectrum.cz/index.php?lang=en for games download
 - The turbo loader is taken from tool Z802TZX by Tomas Kac. The tool is found on worldofspectrum.org.
+
+
+George CHIRTOACA, 2023

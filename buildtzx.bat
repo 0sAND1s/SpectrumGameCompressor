@@ -16,6 +16,7 @@ if NOT [%1]==[] set collection=%1.bat
 for %%f in (%collection%) do (
 set name=%%~nf
 if exist ..\input\!name!.tap (set input=..\input\!name!.tap) else (if exist ..\input\!name!.tzx set input=..\input\!name!.tzx)
+set output=..\output\!name!.tzx
 call %%f
 )
 popd
