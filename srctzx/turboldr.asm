@@ -56,6 +56,25 @@ LD_BLOCK:
 		RST  0008;,ERROR_1 
 		DEFB $1A ; R Tape
 */		
+
+Reload:
+		;Preserve A loading flag, address, length.
+		push ix
+		push de
+		push af
+			scf
+			call LD_BYTES			
+		pop  hl
+		pop  de
+		pop  bc		
+		ret  c	
+				
+		push bc
+			call LoadError		
+		pop  ix
+		ld   a, h
+		jr   Reload
+
 		  
 LD_BYTES: 
 		INC  D            
@@ -199,3 +218,13 @@ LD_SAMPLE:
 		SCF                  
 		RET                   
 		
+LoadError:
+	ld		bc, $ffff
+LoadErrorLoop:
+	ld		a, r	
+	out		($fe), a	
+	dec		bc
+	ld		a, b
+	or		c
+	jr		nz, LoadErrorLoop
+	ret			

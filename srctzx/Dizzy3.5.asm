@@ -1,25 +1,23 @@
 
-
 	DEVICE ZXSPECTRUM48
-	
-game_stack		EQU	24999
-temp_stack		EQU $5C00
-game_start		EQU	25000
-game_len		EQU	40535
-game_end		EQU	$FFFE
-game_entry		EQU	32768
-game_poke_a		EQU	45425
-game_poke_v		EQU	182
-	
+
+game_start		equ $6C2F
+game_end		equ	$C4E4
+game_entry		equ $6C32
+game_poke_a		equ 32879
+game_poke_v		equ 0
+game_stack		equ $6044
+temp_stack		equ $0
+
 	org		$5B00 - (StartFixed - StartMobile)
 
 StartMobile:
 	;display message	
 	include "print_msg.asm"			
-
-	;move loader into place		
-	di	
 	
+	di
+	
+	;move loader into place	
 	ld		de, StartFixed	
 	ld		hl, StartFixed - StartMobile
 	add		hl, bc						
@@ -29,6 +27,30 @@ StartMobile:
 	ld		bc, End - TurboLoader
 	ldir
 	
+	;load scren to temp buffer and unpack it	
+	ld		ix, 32768
+	ld		de, SCR_SIZE1
+	ld		a,$ff	
+	call	TurboLoader	
+	
+	push	ix
+	pop		hl
+	dec		hl	
+	
+	;unpack screen to temp buffer and display it
+	ld		de, $C000	
+	call	Unpack								
+	inc		de
+	ex		de, hl
+	
+	;draw partial screen		
+	ld		de, 16384
+	ld		bc,	2048
+	ldir
+	ld		de, 16384 + 6144
+	ld		bc, 256
+	ldir		
+		
 	;load and unpack main block
 	ld		ix, game_start - 5
 	ld		de, MAIN_SIZE
@@ -43,15 +65,15 @@ StartMobile:
 	ld		de, game_end		
 	call	Unpack	
 	
-	xor		a
-	out		($fe), a	
-
-	include "poker.asm"	
+	xor		a		
+	out		($fe), a
+	
+	include "poker.asm"
 	
 	ld		sp, game_stack
-	jp		game_entry	
-	
-StartFixed:				
+	jp		game_entry
+
+StartFixed:		
 Unpack:	
 	include	"dzx0_turbo_back.asm"
 UnpackEnd:
@@ -61,4 +83,3 @@ UnpackEnd:
 TurboLoader:		
 	include "turboldr.asm"
 End:
-

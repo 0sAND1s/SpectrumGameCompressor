@@ -16,17 +16,17 @@ Advantages of having one single compressed block for each game is:
 - Less wasted disk space and file slack (space wasted by incompletely filling the file system blocks)
 - Fitting many more games on one disk is possible. Example: a Spectrum +3 180KB disk can fit games Dizzy 1, 2, 3, 4, 5, which are big games, that also include the SCREEN$.
 
-The automated steps included in buildtap.bat are:
+The automated steps included in buildtap.bat/buildtzx.bat are:
 - extract specific blocks from the ZX Spectrum TAP/TZX file, handled by the game-specific <name>.bat file.
 - optimise the SCREEN$ memory layout for better compression, by arranging memory by columns
-- compress the blocks, using the ZX0 packer
+- compress the screen and main block, using the ZX0 packer
 - assemble a Z80 assembler loader, <name>.asm, that unpacks the game binaries when executed
-- package the resulting binary in a TAP file, in a single BASIC program block, written in the "output" folder, as <name>.tap
+- package the resulting binary in a TAP file, in a single BASIC program block, written in the "output" folder, as <name>.tap; TZX files are created with 2 or 3 blocks.
 - clean up after the build.
 
 There are minimal changes when adding a new game to be compressed, as the common code is kept is separate assembly files, only specific game parameters need to change like game start/end address, stack address, execution address.
 If a common file needs to be updated, the build script will build all games again.
-The generic build script will build all games from the src folder, or just the one specified in command line. Example: "buildtap.bat Dizzy1" will build just the "Dizzy1" game.
+The generic build script will build all games from the srctap/srctzx folder, or just the one specified in command line. Example: "buildtap.bat Dizzy1" will build just the "Dizzy1" game.
 
 In the provided games, 128K games are stripped from 128K specific blobs and only the minimal 48K functionality is kept. It wouldn't fit otherwise in memory all at once most probably.
 The SCREEN$ is kept for games that need it, but is optional.
@@ -38,8 +38,8 @@ Adding a new game to be compressed requires these steps:
 	- block start address for each block: "LOAD ""CODE xxxxx" or tape block start address in BASIC, or "LD IX, xxxxx" in assebler.
 	- block lenght: tape block lenght in BASIC or "LD DE, xxxxx" in assembler
 	- entry point address: "RANDOMIZE USR xxxxx" in BASIC or "JP xxxxx" in assembler.
-- in the "src" folder, create file dizzy1.bat for example, with the game specific commands to extract required game blobs from the TAP file, using hcdisk2.exe or other tool
-- in the "src" folder, create assembler file, eg dizzy1.asm, with the code required at run time for unpacking
+- in the srctap/srctzx folder, create file dizzy1.bat for example, with the game specific commands to extract required game blobs from the source TAP/TZX file, using hcdisk2.exe or other tool
+- in the srctap/srctzx folder, create assembler file, eg dizzy1.asm, with the code required at run time for unpacking
 
 The build script supports tweaking using these parameters:
 - develop, set to 1 to help with troubleshooting: not perform cleanup after the buid, leave script echo on screen, compress quicker (not optimal), create assembler listing file
@@ -53,7 +53,10 @@ These can be called with no argument or with specific file mask to include on th
 I noticed that a few games are not running properly on Spectrum +3 when loaded from disk, but work fine on Spectrum 128K/48K or even +3 when loaded from tape. 
 It might be that the originals had the issue too, or that are not cracked properly, or that are using memory in the printer buffer area. Any help is appreciated to fix them.
 
-Also added the feature for producing turbo-loading TZX files, in folder 'buildtzx'. The games can be built at once with buildtzx.bat or individually with command 'buildtzx.bat Dizzy3' for example.
+Also added the feature for producing turbo-loading TZX files, in folder 'buildtzx'. 
+The games can be built at once with buildtzx.bat or individually with command 'buildtzx.bat Dizzy3' for example. Other arguments for the buildtzx.bat script are: baud rate and 'noscr' (exclude or minimize screen size).
+Example for building Dizzy1 with minimal screen size and 3000 baud: 'buildtzx.bat Dizzy1 3000 noscr'.
+Example for building Dizzy1-7 and 2250 baud: 'buildtzx.bat Dizzy? 2250'. The resulting file name will reflect custom parameter values.
 The default loading speed is 6000 baud, resulting in loading time of at most 1 minute! Some other supported speeds, configured in buildtzx.bat are 1364 (ROM speed), 2250 (good for tape recording), and 3000 (good if 6000 is not working). 
 The loading border stripes color is showing the progress of loading, in chunks of 8KB left to load: white - 8KB, yellow - 16KB, cyan - 24KB, green - 32KB, magenta - 40KB, red - 48KB.
 Using baud 6000, 8KB block is loaded in about 14 seconds, so the color changes every 14 seconds. 
@@ -66,6 +69,7 @@ BAUD/Hardware	|6000 from PC	|3000 from PC |3000 from tape	|2250 from tape|
 ZX Spectrum 48K	|NOK			|OK			  |NOK				|OK			   |
 HC-2000+HW fix	|OK				|OK			  |NOK				|OK			   |
 HC-91+			|NOK			|OK			  |NOK				|OK            |
+
 Conclusion is that for tape usage, 2250 baud is the safe option. With PC as source of signal, 6000 baud might work, but 3000 baud is the safe option.
 My HC-2000 computer had hardware a improvement, the operational amp was replaced with a better version, so I suspect that's why it works better at 6000 baud.
 I also noticed that the ZX Spectrum requires higher signal volume compared to HC-2000.

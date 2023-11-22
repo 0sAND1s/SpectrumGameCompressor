@@ -27,21 +27,12 @@ StartMobile:
 	ld		bc, End - TurboLoader
 	ldir
 	
-	;load scren to temp buffer and unpack it
-	IF	SCR_SIZE > 0
-LoadScr:	
-	ld		ix, 25000
+	;load scren to temp buffer and unpack it	
+	ld		ix, 32768
 	ld		de, SCR_SIZE
-	ld		a,$ff
-	scf
+	ld		a,$ff	
 	call	TurboLoader	
-	jr		c, ScrShow
 	
-	;Signal load error
-	call	LoadError
-	jr		LoadScr
-	
-ScrShow:	
 	push	ix
 	pop		hl
 	dec		hl
@@ -51,21 +42,13 @@ ScrShow:
 	call	Unpack				
 	ex		de, hl
 	inc		hl	
-	call	ScrDraw	
-	ENDIF
+	call	ScrDraw		
 	
 	;load and unpack main block
-LoadMain:	
 	ld		ix, game_start - 5
 	ld		de, MAIN_SIZE
-	ld		a, $ff
-	scf
+	ld		a, $ff	
 	call	TurboLoader
-	jr		c, UnpackMain
-	
-	;Signal load error
-	call	LoadError
-	jr		LoadMain
 	
 	jp StartFixed
 	
@@ -92,22 +75,8 @@ UnpackMain:
 	
 	xor		a
 	jp		game_entry
-
-
-LoadError:
-	ld		bc, $ffff
-LoadErrorLoop:
-	ld		a, r	
-	out		($fe), a	
-	dec		bc
-	ld		a, b
-	or		c
-	jr		nz, LoadErrorLoop
-	ret
-	
-	IF SCR_SIZE > 0
-	include "scr_draw.asm"				
-	ENDIF
+		
+	include "scr_draw.asm"					
 	
 Unpack:	
 	include	"dzx0_turbo_back.asm"

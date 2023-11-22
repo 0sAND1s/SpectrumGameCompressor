@@ -29,18 +29,11 @@ StartMobile:
 
 
 	;load and unpack main block
-LoadMain:	
 	ld		ix, TurboLoader - MAIN_SIZE - 1
 	push	ix
 	ld		de, MAIN_SIZE
-	ld		a, $ff
-	scf
-	call	TurboLoader
-	jr		c, UnpackMain
-	
-	;Signal load error
-	call	LoadError
-	jr		LoadMain
+	ld		a, $ff	
+	call	TurboLoader	
 	
 UnpackMain:		
 	;make screen black
@@ -90,17 +83,6 @@ StartFixed:
 	;start game
 	ld		sp, game_stack	
 	jp		game_entry
-
-LoadError:
-	ld		bc, $ffff
-LoadErrorLoop:
-	ld		a, r	
-	out		($fe), a	
-	dec		bc
-	ld		a, b
-	or		c
-	jr		nz, LoadErrorLoop
-	ret	
 	
 Unpack:	
 	include	"dzx0_turbo_back.asm"

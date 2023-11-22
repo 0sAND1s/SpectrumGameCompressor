@@ -18,6 +18,7 @@ set wantScr=1
 
 set gamelist="srctap\*.bat"
 if not "%1"=="" set gamelist=srctap\%1.bat
+if [%2]==[noscr] set wantScr=0
 for %%d in (%gamelist%) do call :buildgame %%~nd
 goto end
 
@@ -27,7 +28,9 @@ pushd srctap
 set name=%1
 if exist ..\input\%name%.tap (set input=..\input\%name%.tap) else (if exist ..\input\%name%.tzx set input=..\input\%name%.tzx)
 if "%input%"=="" goto skipgamebuild
-set output=..\output\%name%.tap
+set output=..\output\%name%
+if [%wantScr%]==[0] set output=%output%_noscr
+set output=%output%.tap
 set doCompress=1
 
 @REM Always cleanup temp files before build.
