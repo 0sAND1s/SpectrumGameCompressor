@@ -22,27 +22,48 @@ StartMobile:
 	ld	de, StartFixed	
 	ld	hl, StartFixed - StartMobile
 	add	hl, bc			
-	ld	bc, End - StartFixed		
+	ld	bc, UnpackEnd - StartFixed		
 	ldir					
 	
-	ld	bc, SCR_SIZE + MAIN_SIZE - 1
-	add	hl, bc
+	ld	de, TurboLoader
+	ld	bc, End - TurboLoader
+	ldir
 	
-	IFDEF HAVE_SCR
-	ld	de, game_end	
-	call	Unpack		
-	push	hl	
-		ex	de, hl
-		inc	hl
+	;load scren to temp buffer and unpack it
+	IF	SCR_SIZE > 0
+LoadScr:	
+	ld	ix, 32768
+	ld	de, SCR_SIZE
+	ld	a, $ff	
+	call	TurboLoader	
 	
-		call	ScrDraw
-	pop	hl	
+	push	ix
+	pop	hl
+	dec	hl
+	
+	;unpack screen to temp buffer and display it
+	ld	de, $C000
+	call	Unpack				
+	ex	de, hl
+	inc	hl	
+	call	ScrDraw	
 	ENDIF
+	
 	jp	StartFixed
 	
 StartFixed:				
-	ld	de, game_end	
-	call	Unpack		
+	;load and unpack main block
+	ld	ix, game_start - 5
+	ld	de, MAIN_SIZE
+	ld	a, $ff	
+	call	TurboLoader
+
+	push	ix
+	pop	hl
+	dec	hl	
+		
+	ld	de, game_end		
+	call	Unpack	
 	
 	xor	a
 	out	($fe), a	
@@ -61,4 +82,10 @@ StartFixed:
 	include "scr_draw.asm"
 Unpack:	
 	include	"dzx0_turbo_back.asm"
+UnpackEnd:	
+	
+	;The tape loader must be placed in uncontended/upper memory, as it's timing sensitive.
+	ORG 65000
+TurboLoader:		
+	include "turboldr.asm"	
 End:
