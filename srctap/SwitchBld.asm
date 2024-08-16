@@ -36,7 +36,7 @@ StartMobile:
 		ld	e, l
 		inc	de
 		ld	(hl), l
-		ld	bc, 767
+		ld	bc, 767 - 32*2
 		ldir
 	pop	hl	
 	
