@@ -1,0 +1,1 @@
+..\tools\hcdisk2 open %input% : get Bomberman2 -n %name%.main : exit
