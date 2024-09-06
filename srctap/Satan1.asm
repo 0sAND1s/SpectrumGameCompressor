@@ -2,14 +2,14 @@
 
 	DEVICE ZXSPECTRUM48
 	
-game_start		EQU	25400
-game_len		EQU	40000
+game_start		EQU	24500
+game_len		EQU	41035
 game_end		EQU	game_start + game_len - 1
-game_stack		EQU	25400
-temp_stack		EQU $5C00
-game_entry		EQU	54960
-game_poke_a		EQU	57318
-game_poke_v		EQU	201
+game_stack		EQU	24449
+temp_stack		EQU	$5C00
+game_entry		EQU	54262
+game_poke_a		EQU	46589
+game_poke_v		EQU	0
 	
 	org		$5B00 - (StartFixed - StartMobile)
 
