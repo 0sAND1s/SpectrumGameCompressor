@@ -44,12 +44,15 @@ StartMobile:
 	jp	StartFixed
 
 StartFixed:	
-	ld		bc, -(MAIN_SIZE - 1)
-	add		hl, bc
+	IFDEF HAVE_SCR
+	ld	bc, -(MAIN_SIZE - 1)	
+	add	hl, bc
+	ENDIF	
+	
 	;move game code up in RAM, from begining	
-	ld		bc, MAIN_SIZE
+	ld	bc, MAIN_SIZE
 	;allow safety offset of 4
-	ld		de, game_start - 4	
+	ld	de, game_start - 4	
 	ldir
 				
 	;go back one byte after LDIR
@@ -63,13 +66,11 @@ StartFixed:
 	out	($fe), a	
 	
 	;patch for eliminating slowness due to IN $FF; taken from the version from Rares Atodiresei. blue border still produced.
-	ld	hl, $9B40
-	xor	a
+	ld	hl, $9B40	
 	ld	(hl), a
 	inc	hl
 	ld	(hl), a
-	
-	
+		
 	
 	include "poker.asm"	
 	
