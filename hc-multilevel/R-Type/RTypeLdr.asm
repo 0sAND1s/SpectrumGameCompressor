@@ -3,16 +3,16 @@
 		org	$FE5B
 		
 start:			
-		ld		a, ($719C)
-		ld		(myfileidx), a
-		ld		($600D), a		
+		ld	a, ($719C)
+		ld	(myfileidx), a
+		ld	($600D), a		
 		
 		call	pagein
-		ld		hl, myfile
+		ld	hl, myfile
 		call	10830					
 				
 		ei
-		jp		$FE93
+		jp	$FE93
 		
 pagein:		
 		ld	hl,0
