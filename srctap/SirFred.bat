@@ -1,0 +1,1 @@
+..\tools\hcdisk2 open %input% : get "Sir Fred4" -n %name%.main : exit
