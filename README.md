@@ -67,7 +67,8 @@ Testing turbo loading on real hardware with PC or tape player as source
 BAUD/Hardware	|6000 from PC	|3000 from PC |3000 from tape	|2250 from tape|
 ----------------|---------------|-------------|-----------------|--------------|
 ZX Spectrum 48K	|NOK			|OK			  |NOK				|OK			   |
-HC-2000+HW fix	|OK				|OK			  |NOK				|OK			   |
+HC-2000	|OK				|OK			  |NOK				|OK			   |
+HC-91	|OK				|OK			  |?				|?			   |
 HC-91+			|NOK			|OK			  |NOK				|OK            |
 
 Conclusion is that for tape usage, 2250 baud is the safe option. With PC as source of signal, 6000 baud might work, but 3000 baud is the safe option.
