@@ -76,6 +76,7 @@ if exist %name%.scr.packed (
 
 
 @REM output TAP file with blob in REM line
+..\tools\hcdisk2 open %input% : dir : exit
 ..\tools\hcdisk2 format %output% -y : open %output% : bin2bas var %name%.out %name% : dir : exit
 
 @REM cleanup temp files after build
