@@ -67,5 +67,15 @@ PrintMsgLoop:
 	pop		bc		
 	
 	jr		Msg + MsgLen
-Msg	defb	13, 16, 2, 17, 0, " ENTER=start, L=unlimited lives ", 127, "2023 george.chirtoaca@gmail.com"	
+Msg	defb	13, 16, 2, 17, 0, " ENTER=start, L=unlimited lives ", "Hacked & Turbo "
+	IF BAUD==6000
+	defb "6000"
+	ELSEIF BAUD==3000
+	defb "3000"
+	ELSEIF BAUD==2250
+	defb "2250"
+	ELSEIF BAUD==1364
+	defb "1364"
+	ENDIF
+	defb	" - 0s&1s 2026"	
 MsgLen equ	$ - Msg

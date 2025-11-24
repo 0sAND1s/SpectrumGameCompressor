@@ -70,7 +70,7 @@ ZX Spectrum 48K	|NOK		|OK		|NOK		|OK		|
 HC-2000		|OK		|OK		|NOK		|OK		|
 HC-91		|OK		|OK		|?		|?		|
 HC-91+		|NOK		|OK		|NOK		|OK		|
-CIP-03		|NOK		|OK		|?		|?		|
+CIP-03		|NOK		|OK		|NOK		|OK		|
 
 Conclusion is that for tape usage, 2250 baud is the safe option. With PC as source of signal, 6000 baud might work, but 3000 baud is the safe option.
 My HC-2000 computer had hardware a improvement, the operational amp was replaced with a better version, so I suspect that's why it works better at 6000 baud.
