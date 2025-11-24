@@ -66,10 +66,11 @@ This feature allows fast loading of the compressed games on a ZX Spectrum or clo
 Testing turbo loading on real hardware with PC or tape player as source
 BAUD/Hardware	|6000 from PC	|3000 from PC |3000 from tape	|2250 from tape|
 ----------------|---------------|-------------|-----------------|--------------|
-ZX Spectrum 48K	|NOK			|OK			  |NOK				|OK			   |
-HC-2000	|OK				|OK			  |NOK				|OK			   |
-HC-91	|OK				|OK			  |?				|?			   |
-HC-91+			|NOK			|OK			  |NOK				|OK            |
+ZX Spectrum 48K	|NOK		|OK		|NOK		|OK		|
+HC-2000		|OK		|OK		|NOK		|OK		|
+HC-91		|OK		|OK		|?		|?		|
+HC-91+		|NOK		|OK		|NOK		|OK		|
+CIP-03		|NOK		|OK		|?		|?		|
 
 Conclusion is that for tape usage, 2250 baud is the safe option. With PC as source of signal, 6000 baud might work, but 3000 baud is the safe option.
 My HC-2000 computer had hardware a improvement, the operational amp was replaced with a better version, so I suspect that's why it works better at 6000 baud.
@@ -86,4 +87,4 @@ The tools used by the build script are all open source. The binaries are include
 - The turbo loader is taken from tool Z802TZX by Tomas Kac. The tool is found on worldofspectrum.org.
 
 
-George CHIRTOACA, 2023
+George CHIRTOACA, 2026
