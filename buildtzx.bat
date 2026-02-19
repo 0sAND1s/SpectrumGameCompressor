@@ -16,6 +16,7 @@ if NOT [%2]==[] set baud=%2
 if [%3]==[noscr] set wantscr=0
 
 pushd srctzx
+
 for %%f in (%gamelist%) do (
 
 set name=%%~nf
@@ -27,9 +28,43 @@ if [%wantscr%]==[0] set output=!output!_noscr
 set output=!output!.tzx
 
 if [%develop%]==[1] (set lst=--lst) else (set lst=)
+
+@REM call BAT script that extracts SCREEN$ and main block.
+set customProcess=0
 call %%f
-if [%develop%]==[0] del !name!.bin !name!.scr !name!c.scr !name!.main !name!.main.zx0 !name!.scr.zx0 !name!.lst
+if [!customProcess!]==[1] goto :cleanup
+
+@REM skip SCREEN$ processing if we decided to not include the SCREEN$ in the output, either because we set wantScr=0 or because it doesn't fit in memory (like for Dizzy7), or is compressed in the original version, or it doesn't exist.
+set size=0
+if exist !name!.scr (
+@REM order screen by columns for better compression
+..\tools\hcdisk2 screen order column !name!.scr !name!c.scr : exit
+@REM pack screen
+call ..\tools\pack.bat !name!c.scr !name!.scr.zx0
+call :getfilesize !name!.scr.zx0
+)
+set scrsize=!size!
+
+@REM pack the main block
+call ..\tools\pack.bat !name!.main !name!.main.zx0
+call :getfilesize !name!.main.zx0
+set mainsize=!size!
+
+..\tools\sjasmplus !name!.asm --raw=!name!.bin -DBAUD=!baud! -DMAIN_SIZE=!mainsize! -DSCR_SIZE=!scrsize! !lst!
+
+..\tools\hcdisk2 format !output! -y : open !output! : bin2bas var !name!.bin !name! : exit
+if exist !name!.scr ..\tools\hcdisk2 open !output! : put !name!.scr.zx0 -turbo !baud! : exit
+..\tools\hcdisk2 open !output! : put !name!.main.zx0 -turbo !baud! : dir : exit
+
+:cleanup
+if [!develop!]==[0] del !name!.bin !name!.scr !name!c.scr !name!.main !name!.main.zx0 !name!.scr.zx0 !name!.lst
 echo Produced !output!
 
 )
 popd
+
+exit /b
+
+:getfilesize
+set size=%~z1
+exit /b

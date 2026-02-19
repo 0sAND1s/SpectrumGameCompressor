@@ -17,5 +17,5 @@ PrintMsgLoop:
 		djnz	PrintMsgLoop			
 	pop		bc		
 	jr		Msg + MsgLen
-Msg	defb	13, " ENTER=start, L=unlimited lives", 13, 127, "2026 george.chirtoaca@gmail.com"	
+Msg	defb	13, " ENTER=start, L=unlimited lives", 13, "-=Hacked & Packed - 0s&1s 2026=-"	
 MsgLen equ	$ - Msg
