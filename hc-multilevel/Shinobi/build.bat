@@ -52,7 +52,8 @@ hcdisk2 open %output% : put %name%L2 -t b -s 23296 : exit
 
 @REM patch disk loader in block level 3, for level 4
 ..\..\tools\sjasmplus %name%ldr.asm --raw=%name%ldr -DLVL_ORG=$9DDC -DLVL_JMP=$85BA -DLVL_IDX=$34 -DINVULN_ADDR1=$AC19 -DINVULN_ADDR2=$B840 --lst=%name%L3.lst
-hcdisk2 binpatch %name%L3 %name%ldr 17116 : exithcdisk2 open %output% : put %name%L3 -t b -s 23296 : exit
+hcdisk2 binpatch %name%L3 %name%ldr 17116 : exit
+hcdisk2 open %output% : put %name%L3 -t b -s 23296 : exit
 
 @REM patch disk loader in block level 4, for level 5
 ..\..\tools\sjasmplus %name%ldr.asm --raw=%name%ldr -DLVL_ORG=$884F -DLVL_JMP=$9C40 -DLVL_IDX=$35 --lst=%name%L4.lst
