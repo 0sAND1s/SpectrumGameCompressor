@@ -60,6 +60,8 @@ hcdisk2 open %output% : put %name%L3 -t b -s 23296 : exit
 hcdisk2 binpatch %name%L4 %name%ldr 11599 : exit
 @REM POKE for lives
 @REM fsutil file setZeroData offset=11138 length=1 %name%L4
+@REM NOP out instruction that overwrites our level loader
+fsutil file setZeroData offset=11565 length=3 %name%L4
 hcdisk2 open %output% : put %name%L4 -t b -s 23296 : exit
 
 @REM patch disk loader in block level 5, for level 6
@@ -72,6 +74,8 @@ hcdisk2 open %output% : put %name%L5 -t b -s 23296 : exit
 hcdisk2 binpatch %name%L6 %name%ldr 11875 : exit
 @REM POKE for lives
 @REM fsutil file setZeroData offset=11414 length=1 %name%L6
+@REM NOP out instruction that overwrites our level loader
+fsutil file setZeroData offset=11841 length=3 %name%L6
 hcdisk2 open %output% : put %name%L6 -t b -s 23296 : exit
 
 @REM patch disk loader in block level 7, for level 8
@@ -84,6 +88,8 @@ hcdisk2 open %output% : put %name%L7 -t b -s 23296 : exit
 hcdisk2 binpatch %name%L6 %name%ldr 11564 : exit
 @REM POKE for lives
 @REM fsutil file setZeroData offset=11116 length=1 %name%L8
+@REM NOP out instruction that overwrites our level loader
+fsutil file setZeroData offset=11317 length=3 %name%L8
 hcdisk2 open %output% : put %name%L8 -t b -s 23296 : exit
 
 hcdisk2 open %output% : dir : exit
